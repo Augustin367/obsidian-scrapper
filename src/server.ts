@@ -5,6 +5,10 @@ import type { ScrapBody } from "./schemas/scrap-body.schema.js";
 
 const app = Fastify({ logger: true });
 
+app.get("/", async () => {
+  return { status: "ok", service: "scrapper" };
+});
+
 app.post<{ Body: ScrapBody }>("/scrap", async (request, reply) => {
   const { url } = request.body;
   console.log("[SCRAPPER] URL recebida:", url);
@@ -24,6 +28,8 @@ app.post<{ Body: ScrapBody }>("/scrap", async (request, reply) => {
   }
 });
 
-app.listen({ port: 4001, host: "0.0.0.0" }, () => {
-  console.log("🕷️ Scrapper HTTP rodando em http://localhost:4001");
+const port = Number(process.env.PORT) || 8080;
+
+app.listen({ port, host: "0.0.0.0" }, () => {
+  console.log(`Scrapper HTTP rodando na porta ${port}`);
 });
