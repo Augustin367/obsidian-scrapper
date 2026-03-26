@@ -1,22 +1,21 @@
-FROM node:20-alpine
+FROM mcr.microsoft.com/playwright:v1.58.2-jammy
 
 WORKDIR /app
 
-# instala pnpm
-RUN npm install -g pnpm
+# habilita pnpm
+RUN corepack enable
 
-# copia deps
+# copia dependências
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # copia código
 COPY . .
 
-# builda TS
+# builda
 RUN pnpm build
 
-# expõe porta do fastify
-EXPOSE 4001
+# usa porta dinâmica do Railway
+EXPOSE 8080
 
-# inicia servidor
 CMD ["pnpm", "start"]
