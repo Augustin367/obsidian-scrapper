@@ -2,20 +2,20 @@ FROM mcr.microsoft.com/playwright:v1.58.2-jammy
 
 WORKDIR /app
 
-# habilita pnpm
 RUN corepack enable
 
-# copia dependências
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
-
-# copia código
+# copia tudo
 COPY . .
 
-# builda
+# instala deps (inclui devDependencies)
+RUN pnpm install
+
+# builda TS
 RUN pnpm build
 
-# usa porta dinâmica do Railway
+# debug (MUITO IMPORTANTE)
+RUN ls -la dist
+
 EXPOSE 8080
 
 CMD ["pnpm", "start"]
