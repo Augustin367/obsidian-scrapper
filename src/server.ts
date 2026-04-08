@@ -34,5 +34,5 @@ app.post<{ Body: ScrapBody }>("/scrap", async (request, reply) => {
 const port = Number(process.env.PORT) || 8080;
 
 app.listen({ port, host: "0.0.0.0" }, () => {
-  console.log(`🕷️ Scrapper HTTP rodando na porta ${port}`);
+  console.log(`Scrapper HTTP rodando na porta ${port}`);
 });
